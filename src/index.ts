@@ -1,14 +1,18 @@
 import puppeteer, { Page } from 'puppeteer'
 
-import { prepareFolder } from './utils/fileUtils'
-import { getTestingDevices, siteUrl } from './utils/envUtils'
+import { getTestingDevices } from './utils/envUtils'
 
 import { 
-  DeviceSize, 
-  WebPage,
   DEVICE_SIZES,
   WEB_PAGES,
 } from './config/index'
+
+import DeviceSize from './domain/DeviceSize'
+import ProcessInfo from './domain/ProcessInfo'
+
+import accessPage from './infra/accessPage'
+import capturePage from './infra/capturePage'
+import setPageDimension from './infra/setPageDimension'
 
 
 ;(async () => {
@@ -26,16 +30,13 @@ import {
 })()
 
 
-interface WebPageProcess {
-  page: Page,
-  deviceName: string,
+async function testDevice(
+  page: Page, 
+  deviceName: string, 
   deviceDimension: DeviceSize
-  webPage?: WebPage
-}
+) {
 
-async function testDevice(page: Page, deviceName: string, deviceDimension: DeviceSize) {
-
-  let info : WebPageProcess = {
+  let info : ProcessInfo = {
     page,
     deviceName,
     deviceDimension
@@ -48,29 +49,4 @@ async function testDevice(page: Page, deviceName: string, deviceDimension: Devic
     await accessPage(info)
     await capturePage(info)
   }
-}
-
-async function setPageDimension(info: WebPageProcess) {
-  const isMobile: boolean = info.deviceName != 'desktop'
-
-  await info.page.setViewport({
-    width: info.deviceDimension[0],
-    height: info.deviceDimension[1],
-    isMobile,
-  })
-}
-
-const SITE_URL = siteUrl()
-async function accessPage(info: WebPageProcess) {
-  const url = SITE_URL + info.webPage.url
-  await info.page.goto(url)
-}
-
-async function capturePage(info: WebPageProcess) {
-  const page = info.page
-  const title = info.webPage.title // await page.title()
-
-  const path = `screens/${info.deviceName}/${title}.png`
-  prepareFolder(path)
-  await page.screenshot({ path })
 }
