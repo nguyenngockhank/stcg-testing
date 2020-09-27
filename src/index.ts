@@ -44,7 +44,7 @@ async function testDevice (
 }
 
 import CapturePagesUC from './modules/capture-pages/use-cases/CapturePages'
-import CaptureCommandImpl from './modules/capture-pages/infra/CaptureCommandImpl'
+import CapturePagesProcessImpl from './modules/capture-pages/infra/CapturePagesProcessImpl'
 
 async function executeCapturePagesUC(info : ProcessInfo) {
   const captureUC = resolveCaptureUsecase(info)
@@ -52,6 +52,6 @@ async function executeCapturePagesUC(info : ProcessInfo) {
 }
 
 function resolveCaptureUsecase(info : ProcessInfo) {
-  const command = new CaptureCommandImpl(info)
+  const command = new CapturePagesProcessImpl(info)
   return new CapturePagesUC(command)
 }

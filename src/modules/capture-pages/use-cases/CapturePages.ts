@@ -1,8 +1,8 @@
-import CaptureCommand from "../domain/CaptureCommand";
+import CapturePagesProcess from "../domain/CapturePagesProcess";
 
 class CapturePages {
 
-    constructor(private command : CaptureCommand) { }
+    constructor(private command : CapturePagesProcess) { }
 
     async execute() {
         await this.command.execute()
