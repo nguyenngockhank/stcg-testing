@@ -1,8 +1,4 @@
-type DeviceSize = [number, number]
-
-interface DeviceSizes {
-    [deviceName : string]: DeviceSize
-}
+import { DeviceSizes } from '../../domain/DeviceSize'
 
 /**
  * To define more
@@ -17,4 +13,4 @@ const DEVICE_SIZES : DeviceSizes  = {
     'samsung_s7': [1440, 2560],
 }
 
-export { DeviceSize, DEVICE_SIZES }
+export default DEVICE_SIZES

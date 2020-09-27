@@ -1,7 +1,4 @@
-export interface WebPage {
-    title: string,
-    url: string,
-}
+import WebPage from '../../../shared/domain/WebPage'
 
 export const WEB_PAGES : WebPage[] = [
     { title: 'Home', url: '/' },

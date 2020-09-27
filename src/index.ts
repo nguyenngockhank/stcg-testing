@@ -1,18 +1,13 @@
 import puppeteer, { Page } from 'puppeteer'
 
-import { getTestingDevices } from './utils/envUtils'
+import { getTestingDevices } from './modules/shared/infra/utils/envUtils'
 
-import { 
-  DEVICE_SIZES,
-  WEB_PAGES,
-} from './config/index'
+import DEVICE_SIZES from './modules/shared/infra/config/devices'
 
-import DeviceSize from './domain/DeviceSize'
-import ProcessInfo from './domain/ProcessInfo'
+import DeviceSize from './modules/shared/domain/DeviceSize'
+import ProcessInfo from './modules/shared/domain/ProcessInfo'
 
-import accessPage from './infra/accessPage'
-import capturePage from './infra/capturePage'
-import setPageDimension from './infra/setPageDimension'
+import setPageDimension from './modules/shared/infra/setPageDimension'
 
 
 ;(async () => {
@@ -30,7 +25,7 @@ import setPageDimension from './infra/setPageDimension'
 })()
 
 
-async function testDevice(
+async function testDevice (
   page: Page, 
   deviceName: string, 
   deviceDimension: DeviceSize
@@ -44,9 +39,19 @@ async function testDevice(
   // let info 
   await setPageDimension(info)
 
-  for(const webPage of WEB_PAGES) {
-    info.webPage = webPage
-    await accessPage(info)
-    await capturePage(info)
-  }
+  // execute capture pages
+  await executeCapturePagesUC(info)
+}
+
+import CapturePagesUC from './modules/capture-pages/use-cases/CapturePages'
+import CaptureCommandImpl from './modules/capture-pages/infra/CaptureCommandImpl'
+
+async function executeCapturePagesUC(info : ProcessInfo) {
+  const captureUC = resolveCaptureUsecase(info)
+  await captureUC.execute()
+}
+
+function resolveCaptureUsecase(info : ProcessInfo) {
+  const command = new CaptureCommandImpl(info)
+  return new CapturePagesUC(command)
 }

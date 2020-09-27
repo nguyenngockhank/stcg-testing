@@ -1,5 +1,5 @@
 import ProcessInfo from '../domain/ProcessInfo'
-import { prepareFolder } from '../utils/fileUtils'
+import { prepareFolder } from './utils/fileUtils'
 
 async function capturePage(info: ProcessInfo) {
     const page = info.page
