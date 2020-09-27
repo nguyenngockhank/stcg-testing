@@ -31,7 +31,7 @@ describe('Capture Pages', () => {
                     try {
                         const result = await executeCapturePageUC(processInfo)
                         expect(result).toBeUndefined()
-                    } catch (ex) { /** ignore will be failed this case */}
+                    } catch (ex) { /** ignore will be failed this case */ }
                 })
             }  
         })

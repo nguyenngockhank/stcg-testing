@@ -14,8 +14,14 @@ This repo is used for testing [Sổ tay chém gió](https://sotaychemgio.com)
 npm install
 ```
 
-3. Build & run
+3. Run tests
 
 ```
-npm run build
+npm run jest
+```
+
+3+. Run a specific case
+
+```
+node_modules/.bin/jest --runInBand src/tests/favorite-feature.spec.ts
 ```

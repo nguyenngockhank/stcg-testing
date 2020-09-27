@@ -7,7 +7,7 @@ async function capturePage(info: ProcessInfo) {
   
     const path = `screens/${info.deviceName}/${title}.png`
     prepareFolder(path)
-    await page.screenshot({ path })
+    await page.screenshot({ 'fullPage': true, type: 'jpeg', path })
 }
 
 export default capturePage
